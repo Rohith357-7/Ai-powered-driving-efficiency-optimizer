@@ -1,0 +1,44 @@
+def efficiency_score(speed, acceleration, road_type, brake_usage):
+    score = 100
+
+    # Ideal speed range
+    if speed < 20 or speed > 80:
+        score -= 20
+    elif 50 <= speed <= 70:
+        score += 10
+
+    # Acceleration effect
+    if acceleration > 3.0:
+        score -= 15
+    elif acceleration < 1.0:
+        score += 5
+
+    # Road type impact
+    if road_type == 'highway':
+        score += 10
+    elif road_type == 'city':
+        score -= 5
+
+    # Braking effect
+    if brake_usage > 5:
+        score -= 10
+
+    return max(0, min(100, score))
+
+# Sample data
+driving_data = [
+    {"speed": 60, "acceleration": 1.2, "road_type": "highway", "brake_usage": 2},
+    {"speed": 90, "acceleration": 3.5, "road_type": "city", "brake_usage": 6},
+    {"speed": 45, "acceleration": 0.8, "road_type": "city", "brake_usage": 1},
+]
+
+for i, data in enumerate(driving_data):
+    score = efficiency_score(**data)
+    print(f"Trip {i+1}: Efficiency Score = {score}/100")
+
+    if score > 80:
+        print("✅ Great driving! Keep it up.\n")
+    elif score > 60:
+        print("⚠️ Moderate efficiency. Try smoother driving.\n")
+    else:
+        print("❌ Poor efficiency. Avoid harsh acceleration and braking.\n")
